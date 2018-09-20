@@ -1,0 +1,28 @@
+#!/bin/bash
+# Automate thumbnail and html management for a simple one directory photo gallery
+# upon changes in a monitored directory.
+
+
+# Create variables from arguments passed by incron
+path=$1
+file=$2
+event=$3
+
+
+# Thumbnail and HTML Creation tasks upon addition of a file to directory
+if [ $event = IN_CREATE ]
+then
+    # Create thumbnail in subdirectory /t
+    convert "$path/$file" -thumbnail 300x300^ -gravity center -extent 300x300 -quality 60 "$path/t/$file"
+    # Append html to the gallery webpage
+    echo "<a data-fancybox='gallery' data-caption='$file' href='/content/images/gallery/$file'><img src='/content/images/gallery/t/$file' alt='$file' /></a>" >> $path/core/gallery.html
+fi
+
+# Remove thumbnail and HTML when file is deleted from directory
+if [ $event = IN_DELETE ]
+then 
+    # Delete thumbnail file
+    rm -f "$path/t/$file"
+    # Remove link in html
+    sed -i "/$file/d" $path/core/gallery.html
+fi
