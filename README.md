@@ -1,5 +1,7 @@
 # auto-gallery
-Bash script to automatically generate thumbnails and gallery HTML on file system changes 
+Bash script to automatically generate thumbnails and gallery HTML on file system changes.
+
+View [demo](https://StevenGerner.com/Photos)
 
 # Overview
 A little script to help automate the process of creating a flat single page photo gallery. This was originally designed for [Ghost Blog](https://ghost.org/), but could easily be modified for a standalone gallery page or integration into another content management system. The generated HTML is designed for use with [fancybox3](https://fancyapps.com/fancybox/3/) as a lightbox gallery. This implementation of the script assumes [incron, the inotify cron system](http://inotify.aiken.cz/?section=incron&page=about&lang=en) initaites the script upon file system changes in a monitored directory; however, the script can be called by any means (e.g. cron, command line) as long as the expected arguments are passed.
